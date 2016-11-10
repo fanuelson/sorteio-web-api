@@ -1,0 +1,22 @@
+<html lang="pt" >
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   </head>
+   <body>
+
+      <h3>Olá ${participante},</h3>
+      <p>
+         Você está participando do Sorteio com os seguintes participantes:
+      </p>
+      <p style="color: blue">
+         $participantes
+      </p>
+      <p>
+         E a pessoa que foi sorteada para você é:
+      </p>
+
+      <h2>${sorteado}</h2>
+
+
+   </body>
+</html>
