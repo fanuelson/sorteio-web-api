@@ -3,7 +3,6 @@ package com.foundation.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import com.foundation.dto.ParticipanteDTO;
 import com.foundation.emailModel.EmailNotificacaoModel;
 import com.foundation.exception.EmailException;
 import com.foundation.properties.EmailAuthProperties;
+import com.foundation.validador.NotificacaoValidadorBuilder;
 
 import br.com.any.builder.EmailBuilder;
 import br.com.any.model.Email;
@@ -28,9 +28,10 @@ public class NotificacaoEmailService extends AbstractService {
 	private CustomEmailService customEmailService;
 	
 	public void notificarParticipantes(List<ParSorteadoDTO> paresSorteados) {
-		if(CollectionUtils.isEmpty(paresSorteados)) {
-			throw new EmailException("Nenhum par Sorteado para notificação.");
-		}
+		NotificacaoValidadorBuilder.newInstance()
+			.validarParesSorteadosVazio(paresSorteados)
+			.validarEmails(paresSorteados)
+			.assertValid();
 		String participantesFormatados = getParticipantesFormatadosByPares(paresSorteados);
 		for (ParSorteadoDTO parSorteadoDTO : paresSorteados) {
 			notificarParticipante(participantesFormatados, parSorteadoDTO);
